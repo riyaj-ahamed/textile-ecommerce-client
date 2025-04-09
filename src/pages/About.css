@@ -1,0 +1,89 @@
+.about-container {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 2rem;
+  }
+  
+  .about-hero {
+    
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .about-title {
+    font-size: 3rem;
+    margin: 0;
+  }
+  
+  .about-subtitle {
+    font-size: 1.3rem;
+    margin-top: 10px;
+  }
+  
+  .about-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .about-section {
+    margin-bottom: 2rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .about-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .about-section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .about-list {
+    list-style: none;
+    padding: 0;
+    font-size: 1.05rem;
+  }
+  
+  .about-list li {
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+    position: relative;
+  }
+  
+  .about-list li::before {
+    content: "✔️";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+  }
+  
+  .contact-cta {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  
+  .contact-cta a {
+    color: #e91e63;
+    text-decoration: none;
+  }
+  
+  .contact-cta a:hover {
+    text-decoration: underline;
+  }
+  

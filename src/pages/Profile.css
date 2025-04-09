@@ -1,0 +1,119 @@
+/* ProfilePage.css */
+
+/* Container */
+.profile-container {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header */
+  .profile-heading {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  /* Message */
+  .profile-message {
+    text-align: center;
+    color: green;
+    margin-bottom: 16px;
+  }
+  
+  /* Form */
+  .profile-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    gap: 20px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  
+  .input-group input[type="text"],
+  .input-group input[type="email"],
+  .input-group input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+  
+  /* Preview Image */
+  .profile-image-preview {
+    margin-top: 12px;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ef4444;
+  }
+  
+  /* Submit Button */
+  .update-btn {
+    background: linear-gradient(to right, #ef4444, #ec4899);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .update-btn:hover {
+    background: linear-gradient(to right, #dc2626, #db2777);
+  }
+  
+  /* Orders Section */
+  .orders-section {
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 24px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .orders-heading {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .order-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .order-details {
+    font-size: 14px;
+    color: #555;
+  }
+  
