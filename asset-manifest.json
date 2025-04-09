@@ -1,20 +1,16 @@
 {
   "files": {
     "main.css": "/textile-ecommerce-client/static/css/main.532c012b.css",
-    "main.js": "/textile-ecommerce-client/static/js/main.8f822866.js",
-    "static/media/chudi3.jpg": "/textile-ecommerce-client/static/media/chudi3.6f5457df7748355ee227.jpg",
-    "static/media/chudi2.jpg": "/textile-ecommerce-client/static/media/chudi2.c927666b9b841b8bba97.jpg",
-    "static/media/dress.jpg": "/textile-ecommerce-client/static/media/dress.b40c3e951992c33e372a.jpg",
+    "main.js": "/textile-ecommerce-client/static/js/main.e7c22f60.js",
     "static/media/pants.jpeg": "/textile-ecommerce-client/static/media/pants.79ef5d59d4da57d9717b.jpeg",
     "static/media/feature.jpeg": "/textile-ecommerce-client/static/media/feature.5f9eedeaa3d0ce8e75ea.jpeg",
-    "static/media/saree3.webp": "/textile-ecommerce-client/static/media/saree3.e1e2a8afd0a23369220a.webp",
     "static/media/bg.jpg": "/textile-ecommerce-client/static/media/bg.99cb13309f9df4cae06e.jpg",
     "index.html": "/textile-ecommerce-client/index.html",
     "main.532c012b.css.map": "/textile-ecommerce-client/static/css/main.532c012b.css.map",
-    "main.8f822866.js.map": "/textile-ecommerce-client/static/js/main.8f822866.js.map"
+    "main.e7c22f60.js.map": "/textile-ecommerce-client/static/js/main.e7c22f60.js.map"
   },
   "entrypoints": [
     "static/css/main.532c012b.css",
-    "static/js/main.8f822866.js"
+    "static/js/main.e7c22f60.js"
   ]
 }
