@@ -1,51 +1,83 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { register } from "../api/auth"; // import register function
+import axios from "axios";
 import "./Register.css";
 
-const RegisterPage = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setError("");
-  };
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password !== form.confirmPassword) {
-      return setError("Passwords do not match");
+    setError("");
+    setSuccess("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
     }
 
     try {
-      const res = await register({
-        name: form.name,
-        email: form.email,
-        password: form.password,
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        name,
+        email,
+        password,
       });
 
-      alert(res.data.message); // Show success message
-      navigate("/Login"); // Redirect to login
+      setSuccess("Registration successful! Please login.");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      const msg = err.response?.data?.error || err.response?.data?.message || "Registration failed";
+      setError(msg);
     }
   };
 
   return (
     <div className="register-container">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Full Name" onChange={handleChange} required />
-        <input name="email" placeholder="Email" type="email" onChange={handleChange} required />
-        <input name="password" placeholder="Password" type="password" onChange={handleChange} required />
-        <input name="confirmPassword" placeholder="Confirm Password" type="password" onChange={handleChange} required />
+      <h2>Create Account</h2>
+      <form onSubmit={handleSubmit} className="register-form">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password (min 8 characters)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          minLength={8}
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
         <button type="submit">Create Account</button>
-        {error && <p className="error">{error}</p>}
+
+        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+        {success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
       </form>
     </div>
   );
 };
 
-export default RegisterPage;
+export default Register;

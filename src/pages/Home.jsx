@@ -1,162 +1,135 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
-import axios from "axios";
-import "./Home.css";
-import bgImage from "./bg.jpg";
-import featureImage from "./feature.jpeg";
-import pantsImage from "./pants.jpeg";
+// src/pages/Home.jsx
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import { Link, useNavigate } from 'react-router-dom';
+import api from "../api/api"; // ✅ Works now due to default export in api.js
 
-const HomePage = () => {
-  const [message, setMessage] = useState("");
-  const [cart, setCart] = useState([]);
+const Sidebar = ({ isOpen, onClose }) => (
+  <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+    <button className="close-btn" onClick={onClose}>×</button>
+    <ul>
+      <li><Link to="/" onClick={onClose}>Home</Link></li>
+      <li><Link to="/product" onClick={onClose}>Products</Link></li>
+      <li><Link to="/cart" onClick={onClose}>Cart</Link></li>
+      <li><Link to="/login" onClick={onClose}>Login</Link></li>
+    </ul>
+  </div>
+);
+
+const Home = () => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const [products, setProducts] = useState([]);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => setMenuOpen(!isMenuOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Failed to fetch products:", err));
-
-    axios.get("http://localhost:5000/api/test")
-      .then((res) => setMessage(res.data.message))
-      .catch((err) => console.error(err));
+    api.get('/v1/products')
+      .then((res) => {
+        console.log('✅ Backend connected successfully:', res.data);
+        setProducts(res.data.products || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('❌ Failed to fetch products:', err.message);
+        setLoading(false);
+      });
   }, []);
 
-  const addToCart = (product) => {
-    if (!product?.id || !product?.name || product?.price == null) {
-      alert("Invalid product details.");
-      return;
-    }
-
-    if (cart.some(item => item.id === product.id)) {
-      alert("This product is already in your cart.");
-      return;
-    }
-
-    if (typeof product.price !== "number" || product.price < 0) {
-      alert("Invalid product price.");
-      return;
-    }
-
-    setCart([...cart, product]);
-    alert(`${product.name} added to cart.`);
-  };
-
-  const handleNewsletterSubmit = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("Please enter a valid email.");
-    } else {
-      setEmailError("");
-      alert("Subscribed successfully!");
-      setEmail(""); // Clear field
-    }
+  const handleAddToCart = (product) => {
+    localStorage.setItem('selectedProduct', JSON.stringify(product));
+    navigate('/cart');
   };
 
   return (
     <div className="homepage-container">
       <header className="header">
-        <h1 className="title">VIP COLLECTIONS</h1>
-        <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</div>
-        <nav className={`side-nav ${menuOpen ? 'open' : ''}`}>
-          <ul className="nav-list">
-            <li><Link to="/">🏠 Home</Link></li>
-            <li><Link to="/profile">👤 Profile</Link></li>
-            <li><Link to="/Cart">🛒 Cart</Link></li>
-            <li><Link to="/about">ℹ️ About</Link></li>
-            <li><Link to="/contact">📞 Contact</Link></li>
-            <li><Link to="/Checkout">💳 Checkout</Link></li>
-            <li><Link to="/Login">🔐 Login</Link></li>
-          </ul>
-        </nav>
+        <div className="title">Textile Store</div>
+        <button className="menu-icon" onClick={toggleMenu}>☰</button>
       </header>
 
-      <section className="hero-section" style={{ backgroundImage: `url(${bgImage})` }}>
-        <div className="hero-overlay">
-          <h2 className="hero-title">Welcome to VIP COLLECTIONS</h2>
-          <p className="hero-text">
-            {message || "Explore premium textile fashion today. Trendy, Elegant, Affordable."}
-          </p>
-          <Link to="/Product" className="shop-now-btn">🛍️ Shop Now</Link>
-        </div>
+      <Sidebar isOpen={isMenuOpen} onClose={closeMenu} />
+
+      <section className="hero-section">
+        <h1 className="hero-title">Discover the Best in Textile Fashion</h1>
+        <p className="hero-text">Trendy designs, quality fabric, and unbeatable prices!</p>
+        <Link to="/product" className="shop-now-btn">Shop Now</Link>
       </section>
 
-      <section className="promo-banner">
-        <h3>🎁 Special Offer: Flat 20% off on your first purchase!</h3>
-        <p>Use code: <strong>VIP20</strong> at checkout</p>
-      </section>
+      <div className="promo-banner">🔥 Flat 50% Off on First Order 🔥</div>
 
-      <section className="filter-bar">
-        <input type="text" placeholder="Search products..." />
+      <div className="filter-bar">
+        <input type="text" placeholder="Search Products..." />
         <select>
-          <option>All Categories</option>
-          <option>Shirts</option>
-          <option>Pants</option>
-          <option>Accessories</option>
+          <option value="">Category</option>
+          <option value="sarees">Sarees</option>
+          <option value="dresses">Dresses</option>
+          <option value="kurtas">Kurtas</option>
         </select>
-      </section>
-
-      <section className="category-carousel">
-        <div className="category-card">
-          <img src={featureImage} alt="Shirts" />
-          <h4>Shirts</h4>
-        </div>
-        <div className="category-card">
-          <img src={pantsImage} alt="Pants" />
-          <h4>Pants</h4>
-        </div>
-      </section>
+        <select>
+          <option value="">Sort By</option>
+          <option value="new">Newest</option>
+          <option value="lowToHigh">Price: Low to High</option>
+          <option value="highToLow">Price: High to Low</option>
+        </select>
+      </div>
 
       <section className="products-section">
-        <h2 className="section-title">Offers for Birthday Person</h2>
+        <h2 className="section-title">Featured Products</h2>
         <div className="products-grid">
-          {products.map((product) => (
-            <div key={product.id} className="product-card">
-              <img src={product.image} alt={product.name} className="product-image" />
-              <h3 className="product-name">{product.name}</h3>
-              <p className="product-price">
-                {product.price === 0 ? "🎉 Free!" : `₹${product.price}`}
-              </p>
-              {product.price !== 0 && (
-                <button className="add-to-cart-btn" onClick={() => addToCart(product)}>
-                  <ShoppingCart className="cart-icon" size={16} />
+          {loading ? (
+            <p>Loading products...</p>
+          ) : products.length > 0 ? (
+            products.map((product) => (
+              <div className="product-card" key={product._id}>
+                <img
+                  src={`http://localhost:5000${product.image}`} // adjust if using deployment
+                  alt={product.name}
+                  className="product-image"
+                />
+                <h3>{product.name}</h3>
+                <p>₹{product.price}</p>
+                <button
+                  className="add-to-cart-btn"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Add to Cart
                 </button>
-              )}
-            </div>
-          ))}
+              </div>
+            ))
+          ) : (
+            <p>No products available.</p>
+          )}
         </div>
       </section>
 
-      <section className="newsletter">
-        <h2>📬 Subscribe to Our Newsletter</h2>
-        <p>Get latest updates and exclusive deals directly to your inbox.</p>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button onClick={handleNewsletterSubmit}>Subscribe</button>
-        {emailError && <p className="error">{emailError}</p>}
-      </section>
+      <div className="newsletter">
+        <h3>Subscribe to our Newsletter</h3>
+        <input type="email" placeholder="Enter your email" />
+        <button>Subscribe</button>
+      </div>
 
-      <section className="customer-reviews">
-        <h2>💬 Customer Reviews</h2>
-        <div className="review-card">"The quality of the fabric is outstanding. Highly recommend!"</div>
-        <div className="review-card">"Smooth shopping experience and great discounts!"</div>
-      </section>
+      <div className="customer-reviews">
+        <h3>Customer Reviews</h3>
+        <div className="review-card">
+          <p>"Amazing quality and fast delivery. Highly recommend!"</p>
+          <strong>- Priya</strong>
+        </div>
+        <div className="review-card">
+          <p>"Affordable and trendy. Loved the fabric!"</p>
+          <strong>- Ram</strong>
+        </div>
+      </div>
 
-      <Link to="/Cart" className="floating-cart">🛍️ View Cart ({cart.length})</Link>
+      <Link to="/cart" className="floating-cart">🛒 Cart</Link>
 
       <footer className="footer">
-        &copy; 2025 VIP COLLECTIONS. All rights reserved.
+        &copy; {new Date().getFullYear()} Textile Store. All rights reserved.
       </footer>
     </div>
   );
 };
 
-export default HomePage;
+export default Home;

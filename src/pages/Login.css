@@ -1,6 +1,18 @@
+/* Login Page Styles */
+.login-page {
+  background: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* Container */
 .login-container {
   max-width: 400px;
-  margin: 60px auto;
+  width: 100%;
+  margin: auto;
   padding: 30px;
   background-color: #ffffff;
   border-radius: 20px;
@@ -8,23 +20,28 @@
   text-align: center;
 }
 
+/* Heading */
 .login-container h2 {
   margin-bottom: 20px;
   font-size: 28px;
   color: #222;
+  font-weight: bold;
 }
 
+/* Form */
 .login-container form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
+/* Input Fields */
 .login-container input {
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 16px;
+  transition: all 0.2s ease-in-out;
 }
 
 .login-container input:focus {
@@ -33,6 +50,7 @@
   box-shadow: 0 0 4px rgba(255, 95, 109, 0.4);
 }
 
+/* Submit Button */
 .login-container button {
   padding: 12px;
   background: linear-gradient(to right, #ef4444, #ec4899);
@@ -42,14 +60,37 @@
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-weight: 600;
 }
 
 .login-container button:hover {
   background: linear-gradient(to right, #ff5f6d, #ffc371);
 }
 
-.login-container .error {
+/* Error Message */
+.login-container .error,
+.error {
   color: red;
   font-size: 14px;
   margin-top: 5px;
+  text-align: left;
+}
+
+/* Register Link Section */
+.redirect-text,
+.register-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.register-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }

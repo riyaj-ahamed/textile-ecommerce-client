@@ -1,13 +1,11 @@
+// src/api/api.js
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/users";
+const API = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  withCredentials: true,
+});
 
-// Register user
-export const register = async (userData) => {
-  return await axios.post(`${API_URL}/register`, userData);
-};
-
-// Login user
-export const login = async (credentials) => {
-  return await axios.post(`${API_URL}/login`, credentials);
-};
+// Example API calls:
+export const login = (data) => API.post("/api/auth/login", data);
+export const register = (data) => API.post("/api/auth/register", data);
