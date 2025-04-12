@@ -1,19 +1,17 @@
+// src/pages/Product.jsx
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { login } from '../api/api';
 import "./Product.css";
-// src/pages/Product.jsx
-//import { login } from "../api/api"; // ✅ if you only need login
-import api from "../api/api"; // ✅ Works now due to default export in api.js
 
-// ✅ Local image imports for fallback
+// Local fallback images
 import dupattaImage from "./chudi2.jpg";
 import kurtiImage from "./chudi3.jpg";
 import sareeImage from "./saree3.webp";
 import fabricImage from "./dress.jpg";
 
-// ✅ Fallback product data
 const fallbackProducts = [
   {
     _id: "1",
@@ -64,7 +62,7 @@ const TextileProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await api.get("/products");
+        const res = await login.get("/products");
         setProducts(res.data);
         setDisplayedProducts(res.data);
       } catch (err) {
@@ -75,7 +73,6 @@ const TextileProducts = () => {
         setLoading(false);
       }
     };
-
     fetchProducts();
   }, []);
 
@@ -119,7 +116,6 @@ const TextileProducts = () => {
     <div className="textile-container">
       <h2 className="textile-heading">Textile Products</h2>
 
-      {/* 🔍 Filters */}
       <div className="filter-bar">
         <input
           type="text"
@@ -152,7 +148,6 @@ const TextileProducts = () => {
         </select>
       </div>
 
-      {/* 🧵 Product Grid */}
       {loading ? (
         <p>Loading products...</p>
       ) : (
@@ -162,11 +157,7 @@ const TextileProducts = () => {
           ) : (
             displayedProducts.map((product) => (
               <div key={product._id} className="textile-card">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="textile-img"
-                />
+                <img src={product.image} alt={product.name} className="textile-img" />
                 <h3 className="product-name">{product.name}</h3>
                 <p className="product-price">₹{product.price}</p>
                 <p className="product-description">{product.description}</p>

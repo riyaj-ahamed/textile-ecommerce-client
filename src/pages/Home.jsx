@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { Link, useNavigate } from 'react-router-dom';
-import api from "../api/api"; // ✅ Works now due to default export in api.js
+import { login } from '../api/api';
 
 const Sidebar = ({ isOpen, onClose }) => (
   <div className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -26,9 +26,8 @@ const Home = () => {
   const closeMenu = () => setMenuOpen(false);
 
   useEffect(() => {
-    api.get('/v1/products')
+    login.get('/v1/products')
       .then((res) => {
-        console.log('✅ Backend connected successfully:', res.data);
         setProducts(res.data.products || []);
         setLoading(false);
       })
@@ -85,7 +84,7 @@ const Home = () => {
             products.map((product) => (
               <div className="product-card" key={product._id}>
                 <img
-                  src={`http://localhost:5000${product.image}`} // adjust if using deployment
+                  src={`http://localhost:5000${product.image}`}
                   alt={product.name}
                   className="product-image"
                 />

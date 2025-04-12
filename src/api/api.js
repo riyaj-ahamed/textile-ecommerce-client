@@ -1,15 +1,7 @@
 // src/api/api.js
 import axios from 'axios';
 
-const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // or your production backend URL
-  withCredentials: true, // include cookies if using auth tokens
-});
+const API_BASE_URL = 'https://your-backend.onrender.com';
 
-// Named API calls
-export const login = (userData) => API.post('/auth/login', userData);
-export const register = (userData) => API.post('/auth/register', userData);
-export const getProducts = () => API.get('/v1/products');
-
-// ✅ Add default export
-export default API;
+export const login = (data) => axios.post(`${API_BASE_URL}/api/auth/login`, data);
+export const register = (data) => axios.post(`${API_BASE_URL}/api/auth/register`, data);
